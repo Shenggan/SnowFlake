@@ -46,11 +46,11 @@ private:
 
 public:
     SnowFlake(int datacenter_Id, int machine_Id) {
-        if (datacenter_Id > max_datacenter_num_ || datacenter_Id < 0) {
+        if ((uint64_t)datacenter_Id > max_datacenter_num_ || datacenter_Id < 0) {
             LLOG(ERRO) << "datacenterId can't be greater than max_datacenter_num_ or less than 0";
             exit(0);
         }
-        if (machine_Id > max_machine_num_ || machine_Id < 0) {
+        if ((uint64_t)machine_Id > max_machine_num_ || machine_Id < 0) {
             LLOG(ERRO) << "machineId can't be greater than max_machine_num_or less than 0";
             exit(0);
         }

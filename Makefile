@@ -18,10 +18,23 @@ TEST_BIN = test_$(PRG)
 TEST_SRC = test/test_$(PRG).cc
 
 LOG_SRC = utils/lightlog.h
+LOG_URL = https://raw.githubusercontent.com/Shenggan/LightLOG/master/lightlog.h
 
-$(TEST_BIN): $(SRC) $(TEST_SRC) $(LOG_SRC)
+all: $(TEST_BIN)
+
+$(LOG_SRC):
+	mkdir -p utils
+	wget $(LOG_URL) -O $(LOG_SRC)
+
+$(TEST_BIN): $(LOG_SRC) $(SRC) $(TEST_SRC)
 	$(CXX) -o $@ $(TEST_SRC) $(CFLAGS) $(LDFLAGS) $(OPT)
+
+test: $(TEST_BIN)
+	./$(TEST_BIN)
 
 .PHONY : clean
 clean:
-	rm $(TEST_BIN)
+	-rm -f $(TEST_BIN)
+
+clean_deps:
+	-rm -rf utils
